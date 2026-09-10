@@ -1,71 +1,150 @@
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/open-edge-platform/anomalib/main/docs/source/_static/images/logos/anomalib-wide-blue.png" width="600px" alt="Anomalib Logo - A deep learning library for anomaly detection">
-
-**A library for benchmarking, developing and deploying deep learning anomaly detection algorithms**
-
----
-
-[Key Features](#key-features) •
-[Docs](https://anomalib.readthedocs.io/en/latest/) •
-[Notebooks](examples/notebooks) •
-[License](LICENSE)
-
-![python](https://img.shields.io/badge/python-3.10%2B-green)
-![pytorch](https://img.shields.io/badge/pytorch-2.6%2B-orange)
-![lightning](https://img.shields.io/badge/lightning-2.2%2B-blue)
-![openvino](https://img.shields.io/badge/openvino-2024.0%2B-purple)
-
-[![Pre-Merge Checks](https://github.com/open-edge-platform/anomalib/actions/workflows/pre_merge.yml/badge.svg)](https://github.com/open-edge-platform/anomalib/actions/workflows/pre_merge.yml)
-[![codecov](https://codecov.io/gh/open-edge-platform/anomalib/branch/main/graph/badge.svg?token=Z6A07N1BZK)](https://codecov.io/gh/open-edge-platform/anomalib)
-[![Downloads](https://static.pepy.tech/personalized-badge/anomalib?period=total&units=international_system&left_color=grey&right_color=green&left_text=PyPI%20Downloads)](https://pepy.tech/project/anomalib)
-[![snyk](https://snyk.io/advisor/python/anomalib/badge.svg)](https://snyk.io/advisor/python/anomalib)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8330/badge)](https://www.bestpractices.dev/projects/8330)
-
-[![ReadTheDocs](https://readthedocs.org/projects/anomalib/badge/?version=latest)](https://anomalib.readthedocs.io/en/latest/?badge=latest)
-[![Anomalib - Gurubase docs](https://img.shields.io/badge/Gurubase-Ask%20Anomalib%20Guru-006BFF)](https://gurubase.io/g/anomalib)
-
-<a href="https://trendshift.io/repositories/14514" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/14514" alt="open-edge-platform%2Fanomalib | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-</div>
-
----
-
-> 🌟 **Announcing v2.6.1 Release!** 🌟
->
-> This patch release migrates the Kaputt dataset to Hugging Face and fixes several data-handling and metric bugs.
->
-> Key Changes
->
-> - **Kaputt on Hugging Face**: Dataset now downloads from the official [Hugging Face repository](https://huggingface.co/datasets/amazon/kaputt) instead of requiring a manual request form.
-> - **Security fix**: Archive extraction now blocks tar/zip path traversal on all supported Python versions.
-> - **Bug fixes**: Random tiling now honours the configured tile width, `seed=0` is treated as a valid seed in `random_split`, and the binary classification curve metric is faster.
->
-> We value your input! Please share feedback via [GitHub Issues](https://github.com/open-edge-platform/anomalib/issues) or our [Discussions](https://github.com/open-edge-platform/anomalib/discussions)
-
-# 👋 Introduction
-
-Anomalib is a deep learning library that aims to collect state-of-the-art anomaly detection algorithms for benchmarking on both public and private datasets. Anomalib provides several ready-to-use implementations of anomaly detection algorithms described in the recent literature, as well as a set of tools that facilitate the development and implementation of custom models. The library has a strong focus on visual anomaly detection, where the goal of the algorithm is to detect and/or localize anomalies within images or videos in a dataset. Anomalib is constantly updated with new algorithms and training/inference extensions, so keep checking!
+# Anomalib — AI Defect Detection for Manufacturing Quality Control
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/open-edge-platform/anomalib/main/docs/source/_static/images/readme.png" width="1000" alt="A prediction made by anomalib">
+  <img src="docs/assets/anomalib-hero.png" alt="Anomalib hero banner" width="100%" />
 </p>
 
-## Key features
+<p align="center">
+  <strong>A library for benchmarking, developing, and deploying deep learning anomaly detection algorithms.</strong><br/>
+  Build industrial defect detection pipelines for images and videos with a modular API, CLI, model zoo, benchmarking tools, and deployment-ready inference workflows.
+</p>
 
-- Simple and modular API and CLI for training, inference, benchmarking, and hyperparameter optimization.
-- The largest public collection of ready-to-use deep learning anomaly detection algorithms and benchmark datasets.
-- [**Lightning**](https://www.lightning.ai/) based model implementations to reduce boilerplate code and limit the implementation efforts to the bare essentials.
-- The majority of models can be exported to [**OpenVINO**](https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html) Intermediate Representation (IR) for accelerated inference on Intel hardware.
-- A set of [inference tools](tools) for quick and easy deployment of the standard or custom anomaly detection models.
+<p align="center">
+  <a href="#overview">Overview</a> •
+  <a href="#key-capabilities">Capabilities</a> •
+  <a href="#workflow--architecture">Workflow</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#training">Training</a> •
+  <a href="#inference">Inference</a> •
+  <a href="#repository-structure">Repository Structure</a> •
+  <a href="#use-cases">Use Cases</a> •
+  <a href="#license">License</a>
+</p>
 
-# 📦 Installation
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square" alt="Python 3.10+" />
+  <img src="https://img.shields.io/badge/PyTorch-2.6%2B-ee4c2c?style=flat-square" alt="PyTorch 2.6+" />
+  <img src="https://img.shields.io/badge/Lightning-2.2%2B-792EE5?style=flat-square" alt="Lightning 2.2+" />
+  <img src="https://img.shields.io/badge/OpenVINO-2024%2B-00C7FD?style=flat-square" alt="OpenVINO 2024+" />
+  <img src="https://img.shields.io/badge/Focus-Visual%20Anomaly%20Detection-2563eb?style=flat-square" alt="Visual anomaly detection" />
+</p>
 
-Anomalib can be installed from PyPI. We recommend using a virtual environment and a modern package installer like `uv` or `pip`.
+---
 
-## 🚀 Quick Install
+## Overview
 
-For a standard installation, you can use `uv` or `pip`. This will install the latest version of Anomalib with its core dependencies. PyTorch will be installed based on its default behavior, which usually works for CPU and standard CUDA setups.
+**Anomalib** is an open-source computer vision library focused on **visual anomaly detection**. It provides a practical framework for benchmarking state-of-the-art methods, developing custom models, and deploying industrial inspection systems for **image and video anomaly detection**.
+
+The project is built for teams who need more than just model training. It covers the full lifecycle of anomaly detection:
+
+- dataset handling
+- modular model development
+- training and evaluation
+- hyperparameter optimization
+- inference and visualization
+- model export and deployment
+- production-oriented tooling
+
+Typical anomaly-detection outputs include:
+
+- image-level anomaly score
+- heatmap / anomaly map
+- pixel-level mask
+- localized defect region
+
+This makes the project especially suitable for **manufacturing quality control**, **surface inspection**, **electronics inspection**, and other industrial vision workflows.
+
+---
+
+## Key Capabilities
+
+<p align="center">
+  <img src="docs/assets/anomalib-overview.png" alt="Anomalib project overview" width="96%" />
+</p>
+
+### Core strengths
+
+| Capability | Description |
+|---|---|
+| **Modular API and CLI** | Simple interfaces for training, inference, benchmarking, and extension. |
+| **Large model collection** | A wide range of ready-to-use anomaly detection algorithms. |
+| **Benchmarking support** | Built-in support for public datasets and comparative evaluation. |
+| **Lightning-based design** | Reduced boilerplate and cleaner model implementation with PyTorch Lightning. |
+| **OpenVINO export path** | Export many models to OpenVINO IR for accelerated Intel inference. |
+| **Inference tools** | Utilities for fast prediction and easy deployment of standard and custom models. |
+| **Research + production balance** | Useful for experimentation, reproducibility, and real-world industrial workflows. |
+
+### Notable highlights
+
+- built around modern deep learning workflows
+- supports training, evaluation, and deployment in one ecosystem
+- usable from both Python and the command line
+- supports images and videos
+- designed to be extended with custom models and datasets
+
+---
+
+## Workflow & Architecture
+
+<p align="center">
+  <img src="docs/assets/anomalib-workflow.png" alt="Anomalib workflow and architecture" width="96%" />
+</p>
+
+The project workflow can be summarized as:
+
+```text
+Datasets / Images / Videos
+            ↓
+Preprocessing & DataModules
+            ↓
+Model Zoo & Training Engine
+            ↓
+Benchmarking / Optimization
+            ↓
+Inference & Prediction
+            ↓
+Heatmaps / Masks / Localization
+            ↓
+Export / Deployment / Application Integration
+```
+
+### Main pipeline stages
+
+#### 1. Datasets and input
+Anomalib works with industrial anomaly datasets and custom data sources, including image and video inputs.
+
+#### 2. Preprocessing and datamodules
+The library provides a structured path for:
+
+- loading and organizing data
+- transformations and augmentation
+- train/validation/test splitting
+- Lightning-based datamodule workflows
+
+#### 3. Model training
+Ready-to-use anomaly detection algorithms can be trained through a common engine, making experimentation more consistent and scalable.
+
+#### 4. Benchmarking and optimization
+The framework supports comparative evaluation and hyperparameter optimization for reproducible benchmarking.
+
+#### 5. Inference and outputs
+Prediction results can include:
+
+- anomaly score
+- anomaly heatmap
+- anomaly mask
+- localized defects / contours / regions
+
+#### 6. Deployment
+Models can be exported and integrated into production applications using formats and tools such as OpenVINO, ONNX, and TorchScript where supported.
+
+---
+
+## Installation
+
+Anomalib can be installed from PyPI. Using a virtual environment is recommended.
+
+### Quick install
 
 ```bash
 # With uv
@@ -75,148 +154,131 @@ uv pip install anomalib
 pip install anomalib
 ```
 
-For more control over the installation, such as specifying the PyTorch backend (e.g., XPU, CUDA and ROCm) or installing extra dependencies for specific models, see the advanced options below.
+---
 
-<details>
-<summary><strong>💡 Advanced Installation: Specify Hardware Backend</strong></summary>
+## Advanced Installation
 
-To ensure compatibility with your hardware, you can specify a backend during installation. This is the recommended approach for production environments and for hardware other than CPU or standard CUDA.
-
-**Using `uv`:**
+### Hardware-specific extras
 
 ```bash
-# CPU support (default, works on all platforms)
+# CPU
 uv pip install "anomalib[cpu]"
 
-# CUDA 12.6 support (Linux/Windows with NVIDIA GPU)
+# CUDA 12.6
 uv pip install "anomalib[cu126]"
 
-# CUDA 13.0 support (Linux/Windows with NVIDIA GPU)
+# CUDA 13.0
 uv pip install "anomalib[cu130]"
 
-# ROCm support (Linux with AMD GPU)
+# ROCm
 uv pip install "anomalib[rocm]"
 
-# Intel XPU support (Linux with Intel GPU)
+# Intel XPU
 uv pip install "anomalib[xpu]"
 ```
 
-**Using `pip`:**
-The same extras can be used with `pip`:
+The same extras can also be used with `pip`, for example:
 
 ```bash
 pip install "anomalib[cu130]"
 ```
 
-</details>
+### Additional optional dependency groups
 
-<details>
-<summary><strong>🧩 Advanced Installation: Additional Dependencies</strong></summary>
+```text
+[openvino]   # Intel OpenVINO optimization
+[clip]       # vision-language models
+[vlm]        # advanced VLM backends
+[loggers]    # experiment tracking
+[notebooks]  # notebook support
+[full]       # all optional dependencies
+```
 
-Anomalib includes most dependencies by default. For specialized features, you may need additional optional dependencies. Remember to include your hardware-specific extra.
+### Examples
 
 ```bash
-# Example: Install with OpenVINO support and CUDA 13.0
+# OpenVINO + CUDA 13.0
 uv pip install "anomalib[openvino,cu130]"
 
-# Example: Install all optional dependencies for a CPU-only setup
+# Full CPU-only setup
 uv pip install "anomalib[full,cpu]"
 ```
 
-Here is a list of available optional dependency groups:
+---
 
-| Extra         | Description                              | Purpose                                     |
-| :------------ | :--------------------------------------- | :------------------------------------------ |
-| `[openvino]`  | Intel OpenVINO optimization              | For accelerated inference on Intel hardware |
-| `[clip]`      | Vision-language models                   | `winclip`                                   |
-| `[vlm]`       | Vision-language model backends           | Advanced VLM features                       |
-| `[loggers]`   | Experiment tracking (wandb, comet, etc.) | For experiment management                   |
-| `[notebooks]` | Jupyter notebook support                 | For running example notebooks               |
-| `[full]`      | All optional dependencies                | All optional features                       |
+## Install from Source
 
-</details>
+For development or contribution workflows:
 
-<details>
-<summary><strong>🔧 Advanced Installation: Install from Source</strong></summary>
-
-For contributing to `anomalib` or using a development version, you can install from source.
-
-**Using `uv`:**
-This is the recommended method for developers as it uses the project's lock file for reproducible environments.
+### Using `uv`
 
 ```bash
 git clone https://github.com/open-edge-platform/anomalib.git
 cd anomalib
 
-# Create the virtual environment
 uv venv
-
-# Sync with the lockfile for a specific backend (e.g., CPU)
 uv sync --extra cpu
+```
 
-# Or for a different backend like CUDA 13.0
+Examples:
+
+```bash
 uv sync --extra cu130
-
-# To set up a full development environment
 uv sync --extra dev --extra cpu
 ```
 
-**Using `pip`:**
+### Using `pip`
 
 ```bash
 git clone https://github.com/open-edge-platform/anomalib.git
 cd anomalib
 
-# Install in editable mode with a specific backend
 pip install -e ".[cpu]"
-
-# Install with development dependencies
 pip install -e ".[dev,cpu]"
 ```
 
-</details>
+---
 
-# 🧠 Training
+## Training
 
-Anomalib supports both API and CLI-based training approaches:
+Anomalib supports both **Python API** and **CLI-based** training.
 
-## 🔌 Python API
+### Python API
 
 ```python
 from anomalib.data import MVTecAD
 from anomalib.models import Patchcore
 from anomalib.engine import Engine
 
-# Initialize components
 datamodule = MVTecAD()
 model = Patchcore()
 engine = Engine()
 
-# Train the model
 engine.fit(datamodule=datamodule, model=model)
 ```
 
-## ⌨️ Command Line
+### Command line
 
 ```bash
 # Train with default settings
 anomalib train --model Patchcore --data anomalib.data.MVTecAD
 
-# Train with custom category
+# Train with a specific category
 anomalib train --model Patchcore --data anomalib.data.MVTecAD --data.category transistor
 
-# Train with config file
+# Train with a config file
 anomalib train --config path/to/config.yaml
 ```
 
-# 🤖 Inference
+---
 
-Anomalib provides multiple inference options including Torch, Lightning, Gradio, and OpenVINO. Here's how to get started:
+## Inference
 
-## 🔌 Python API
+The library supports multiple inference workflows including Torch, Lightning, Gradio, and OpenVINO-based usage.
+
+### Python API
 
 ```python
-# Load model and make predictions
 predictions = engine.predict(
     datamodule=datamodule,
     model=model,
@@ -224,7 +286,7 @@ predictions = engine.predict(
 )
 ```
 
-## ⌨️ Command Line
+### Command line
 
 ```bash
 # Basic prediction
@@ -232,170 +294,100 @@ anomalib predict --model anomalib.models.Patchcore \
                  --data anomalib.data.MVTecAD \
                  --ckpt_path path/to/model.ckpt
 
-# Prediction with results
+# Prediction with returned results
 anomalib predict --model anomalib.models.Patchcore \
                  --data anomalib.data.MVTecAD \
                  --ckpt_path path/to/model.ckpt \
                  --return_predictions
 ```
 
-> 📘 **Note:** For advanced inference options including Gradio and OpenVINO, check our [Inference Documentation](https://anomalib.readthedocs.io).
+For advanced inference modes and deployment details, the project documentation should be consulted.
 
-# Training on Intel GPUs
+---
 
-> [!Note]
-> Currently, only single GPU training is supported on Intel GPUs.
-> These commands were tested on Arc 750 and Arc 770.
+## Repository Structure
 
-Ensure that you have PyTorch with XPU support installed. For more information, please refer to the [PyTorch XPU documentation](https://pytorch.org/docs/stable/notes/get_start_xpu.html)
+The repository is organized for both library development and practical usage.
 
-## 🔌 API
-
-```python
-from anomalib.data import MVTecAD
-from anomalib.engine import Engine, SingleXPUStrategy, XPUAccelerator
-from anomalib.models import Stfpm
-
-engine = Engine(
-    strategy=SingleXPUStrategy(),
-    accelerator=XPUAccelerator(),
-)
-engine.train(Stfpm(), datamodule=MVTecAD())
+```text
+AI-Defect-Detection-for-Manufacturing-Quality-Control/
+├── .agents/skills/         # AI-agent skills and helpers
+├── .github/                # GitHub workflows and templates
+├── .semgrep/               # Static analysis rules
+├── application/            # Application code and demos
+├── docs/                   # Project documentation
+├── examples/               # Example scripts and notebooks
+├── src/anomalib/           # Core library source code
+├── tests/                  # Unit and integration tests
+├── tools/                  # Utilities and developer tools
+├── .dockerignore
+├── .gitattributes
+├── .gitignore
+├── .markdownlint.yaml
+├── .pre-commit-config.yaml
+├── .readthedocs.yaml
+├── .semgrepignore
+└── .trufflehogignore
 ```
 
-## ⌨️ CLI
+### Important directories
 
-```bash
-anomalib train --model Padim --data MVTecAD --trainer.accelerator xpu --trainer.strategy xpu_single
-```
+| Path | Purpose |
+|---|---|
+| `src/anomalib/` | Main source code for the anomaly detection library |
+| `examples/` | Example scripts and notebooks |
+| `application/` | Supporting application/demo layer |
+| `tools/` | Inference, utility, and developer tooling |
+| `tests/` | Testing and validation |
+| `docs/` | Documentation and guides |
 
-# ⚙️ Hyperparameter Optimization
+---
 
-Anomalib supports hyperparameter optimization (HPO) using [Weights & Biases](https://wandb.ai/) and [Comet.ml](https://www.comet.com/).
+## Use Cases
 
-```bash
-# Run HPO with Weights & Biases
-anomalib hpo --backend WANDB --sweep_config tools/hpo/configs/wandb.yaml
-```
+Anomalib is well suited for a broad set of inspection and anomaly detection scenarios:
 
-> 📘 **Note:** For detailed HPO configuration, check our [HPO Documentation](https://open-edge-platform.github.io/anomalib/tutorials/hyperparameter_optimization.html).
+- **manufacturing inspection** — detect product and assembly defects
+- **surface inspection** — identify scratches, cracks, and irregularities
+- **electronics inspection** — detect anomalies in PCBs and electronic components
+- **industrial quality control** — enable automated inspection at scale
+- **research benchmarking** — compare anomaly detection methods on standard datasets
+- **production deployment** — integrate trained models into downstream applications
 
-# 🧪 Experiment Management
+---
 
-Track your experiments with popular logging platforms through [PyTorch Lightning loggers](https://pytorch-lightning.readthedocs.io/en/stable/extensions/logging.html):
+## Why It Works Well for Industrial Projects
 
-- 📊 Weights & Biases
-- 📈 Comet.ml
-- 📉 TensorBoard
+This project is attractive for real-world deployment because it combines:
 
-Enable logging in your config file to track:
+- a reusable model ecosystem
+- modern training abstractions
+- benchmark support
+- export paths for optimized inference
+- modular developer workflows
+- clear training-to-deployment continuity
 
-- Hyperparameters
-- Metrics
-- Model graphs
-- Test predictions
+That makes it useful not just as a research library, but as a foundation for **production-grade industrial vision systems**.
 
-> 📘 **Note:** For logging setup, see our [Logging Documentation](https://anomalib.readthedocs.io/en/latest/markdown/guides/reference/loggers/index.html).
+---
 
-# 📊 Benchmarking
+## Documentation and Resources
 
-Evaluate and compare model performance across different datasets:
+Useful project areas include:
 
-```bash
-# Run benchmarking with default configuration
-anomalib benchmark --config tools/experimental/benchmarking/sample.yaml
-```
+- `docs/`
+- `examples/notebooks`
+- inference tools under `tools/`
+- project documentation site for deeper deployment and usage details
 
-> 💡 **Tip:** Check individual model performance in their respective README files:
->
-> - [Patchcore Results](src/anomalib/models/image/patchcore/README.md#mvtec-ad-dataset)
-> - [Other Models](src/anomalib/models/)
+---
 
-# Anomalib Studio
+## License
 
-> [!IMPORTANT]
-> Anomalib Studio is currently under active development and should be considered a pre-release. Features may change, and some functionality may be incomplete or unstable. We welcome feedback and contributions as we work towards a stable release.
+Refer to the repository `LICENSE` file for the project’s license details.
 
-Anomalib Studio is a low/no-code web application that allows users to train and deploy anomaly detection models. It enables users to leverage Anomalib's features in their operational environment. Users can connect USB and IP cameras, or use a folder of images, as input to the training pipeline. The tool allows direct output to their industrial pipelines through ROS messages, MQTT, etc.
+---
 
 <p align="center">
-  <img src="docs/source/_static/images/anomalib_studio.png" alt="Anomalib Studio" />
-</p>
-
-The source code for Anomalib Studio lives in the [application](application) folder.
-
-Anomalib Studio is available as two distributions:
-
-1. As a [docker container](application/docker)
-2. As a [standalone application](application/ui)
-
-For more information on each, refer to the respective README files.
-
-## Get started with development build
-
-### Setup Backend Dependencies
-
-> [!NOTE]
-> This assumes that you have `uv` installed. If not, please refer to the [installation guide](https://docs.astral.sh/uv/getting-started/installation/).
-
-```bash
-cd application/backend
-uv sync --extra xpu # or uv sync --extra cu130 for CUDA 13.0, uv sync --extra cpu for CPU
-```
-
-### Setup Frontend Dependencies
-
-```bash
-cd application/ui
-npm install
-```
-
-### Run the application
-
-> [!IMPORTANT]
-> Both backend and frontend dependencies should be installed before running the application.
-
-Run the backend server:
-
-```bash
-cd application/backend
-./run.sh
-```
-
-Run the frontend server:
-
-```bash
-cd application/ui
-npm run start
-```
-
-Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
-
-# ✍️ Reference
-
-If you find Anomalib useful in your research or work, please cite:
-
-```tex
-@inproceedings{akcay2022anomalib,
-  title={Anomalib: A deep learning library for anomaly detection},
-  author={Akcay, Samet and Ameln, Dick and Vaidya, Ashwin and Lakshmanan, Barath and Ahuja, Nilesh and Genc, Utku},
-  booktitle={2022 IEEE International Conference on Image Processing (ICIP)},
-  pages={1706--1710},
-  year={2022},
-  organization={IEEE}
-}
-```
-
-# 👥 Contributing
-
-We welcome contributions! Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
-
-<p align="center">
-  <a href="https://github.com/open-edge-platform/anomalib/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=open-edge-platform/anomalib" alt="Contributors to open-edge-platform/anomalib" />
-  </a>
-</p>
-
-<p align="center">
-  <b>Thank you to all our contributors!</b>
+  <strong>Detect defects earlier. Improve product quality. Deploy inspection systems faster.</strong>
 </p>
