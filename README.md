@@ -1,7 +1,7 @@
-# Anomalib — AI Defect Detection for Manufacturing Quality Control
+# DefectScope_AI— AI Defect Detection for Manufacturing Quality Control
 
 <p align="center">
-  <img src="docs/assets/anomalib-hero.png" alt="Anomalib hero banner" width="100%" />
+  <img src="docs/assets/anomalib-hero.png" alt="DefectScope_AIhero banner" width="100%" />
 </p>
 
 <p align="center">
@@ -59,7 +59,7 @@ This makes the project especially suitable for **manufacturing quality control**
 ## Key Capabilities
 
 <p align="center">
-  <img src="docs/assets/anomalib-overview.png" alt="Anomalib project overview" width="96%" />
+  <img src="docs/assets/anomalib-overview.png" alt="DefectScope_AIproject overview" width="96%" />
 </p>
 
 ### Core strengths
@@ -87,7 +87,7 @@ This makes the project especially suitable for **manufacturing quality control**
 ## Workflow & Architecture
 
 <p align="center">
-  <img src="docs/assets/anomalib-workflow.png" alt="Anomalib workflow and architecture" width="96%" />
+  <img src="docs/assets/anomalib-workflow.png" alt="DefectScope_AIworkflow and architecture" width="96%" />
 </p>
 
 The project workflow can be summarized as:
@@ -111,7 +111,7 @@ Export / Deployment / Application Integration
 ### Main pipeline stages
 
 #### 1. Datasets and input
-Anomalib works with industrial anomaly datasets and custom data sources, including image and video inputs.
+DefectScope_AIworks with industrial anomaly datasets and custom data sources, including image and video inputs.
 
 #### 2. Preprocessing and datamodules
 The library provides a structured path for:
@@ -142,7 +142,7 @@ Models can be exported and integrated into production applications using formats
 
 ## Installation
 
-Anomalib can be installed from PyPI. Using a virtual environment is recommended.
+DefectScope_AIcan be installed from PyPI. Using a virtual environment is recommended.
 
 ### Quick install
 
@@ -241,7 +241,7 @@ pip install -e ".[dev,cpu]"
 
 ## Training
 
-Anomalib supports both **Python API** and **CLI-based** training.
+DefectScope_AIsupports both **Python API** and **CLI-based** training.
 
 ### Python API
 
@@ -261,13 +261,13 @@ engine.fit(datamodule=datamodule, model=model)
 
 ```bash
 # Train with default settings
-anomalib train --model Patchcore --data anomalib.data.MVTecAD
+DefectScope_AItrain --model Patchcore --data anomalib.data.MVTecAD
 
 # Train with a specific category
-anomalib train --model Patchcore --data anomalib.data.MVTecAD --data.category transistor
+DefectScope_AItrain --model Patchcore --data anomalib.data.MVTecAD --data.category transistor
 
 # Train with a config file
-anomalib train --config path/to/config.yaml
+DefectScope_AItrain --config path/to/config.yaml
 ```
 
 ---
@@ -290,12 +290,12 @@ predictions = engine.predict(
 
 ```bash
 # Basic prediction
-anomalib predict --model anomalib.models.Patchcore \
+DefectScope_AIpredict --model anomalib.models.Patchcore \
                  --data anomalib.data.MVTecAD \
                  --ckpt_path path/to/model.ckpt
 
 # Prediction with returned results
-anomalib predict --model anomalib.models.Patchcore \
+DefectScope_AIpredict --model anomalib.models.Patchcore \
                  --data anomalib.data.MVTecAD \
                  --ckpt_path path/to/model.ckpt \
                  --return_predictions
@@ -345,7 +345,7 @@ AI-Defect-Detection-for-Manufacturing-Quality-Control/
 
 ## Use Cases
 
-Anomalib is well suited for a broad set of inspection and anomaly detection scenarios:
+DefectScope_AIis well suited for a broad set of inspection and anomaly detection scenarios:
 
 - **manufacturing inspection** — detect product and assembly defects
 - **surface inspection** — identify scratches, cracks, and irregularities
