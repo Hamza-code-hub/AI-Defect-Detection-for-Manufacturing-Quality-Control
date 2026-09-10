@@ -1,7 +1,7 @@
 # DefectScope_AI— AI Defect Detection for Manufacturing Quality Control
 
 <p align="center">
-  <img src="docs/assets/anomalib-hero.png" alt="DefectScope_AIhero banner" width="100%" />
+  <img src="docs/assets/defectscopeai-hero.png" alt="DefectScope_AIhero banner" width="100%" />
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@
 
 ## Overview
 
-**Anomalib** is an open-source computer vision library focused on **visual anomaly detection**. It provides a practical framework for benchmarking state-of-the-art methods, developing custom models, and deploying industrial inspection systems for **image and video anomaly detection**.
+**defectscopeai** is an open-source computer vision library focused on **visual anomaly detection**. It provides a practical framework for benchmarking state-of-the-art methods, developing custom models, and deploying industrial inspection systems for **image and video anomaly detection**.
 
 The project is built for teams who need more than just model training. It covers the full lifecycle of anomaly detection:
 
@@ -59,7 +59,7 @@ This makes the project especially suitable for **manufacturing quality control**
 ## Key Capabilities
 
 <p align="center">
-  <img src="docs/assets/anomalib-overview.png" alt="DefectScope_AIproject overview" width="96%" />
+  <img src="docs/assets/defectscopeai-overview.png" alt="DefectScope_AIproject overview" width="96%" />
 </p>
 
 ### Core strengths
@@ -87,7 +87,7 @@ This makes the project especially suitable for **manufacturing quality control**
 ## Workflow & Architecture
 
 <p align="center">
-  <img src="docs/assets/anomalib-workflow.png" alt="DefectScope_AIworkflow and architecture" width="96%" />
+  <img src="docs/assets/defectscopeai-workflow.png" alt="DefectScope_AIworkflow and architecture" width="96%" />
 </p>
 
 The project workflow can be summarized as:
@@ -148,10 +148,10 @@ DefectScope_AIcan be installed from PyPI. Using a virtual environment is recomme
 
 ```bash
 # With uv
-uv pip install anomalib
+uv pip install defectscopeai
 
 # Or with pip
-pip install anomalib
+pip install defectscopeai
 ```
 
 ---
@@ -162,25 +162,25 @@ pip install anomalib
 
 ```bash
 # CPU
-uv pip install "anomalib[cpu]"
+uv pip install "defectscopeai[cpu]"
 
 # CUDA 12.6
-uv pip install "anomalib[cu126]"
+uv pip install "defectscopeai[cu126]"
 
 # CUDA 13.0
-uv pip install "anomalib[cu130]"
+uv pip install "defectscopeai[cu130]"
 
 # ROCm
-uv pip install "anomalib[rocm]"
+uv pip install "defectscopeai[rocm]"
 
 # Intel XPU
-uv pip install "anomalib[xpu]"
+uv pip install "defectscopeai[xpu]"
 ```
 
 The same extras can also be used with `pip`, for example:
 
 ```bash
-pip install "anomalib[cu130]"
+pip install "defectscopeai[cu130]"
 ```
 
 ### Additional optional dependency groups
@@ -198,10 +198,10 @@ pip install "anomalib[cu130]"
 
 ```bash
 # OpenVINO + CUDA 13.0
-uv pip install "anomalib[openvino,cu130]"
+uv pip install "defectscopeai[openvino,cu130]"
 
 # Full CPU-only setup
-uv pip install "anomalib[full,cpu]"
+uv pip install "defectscopeai[full,cpu]"
 ```
 
 ---
@@ -213,8 +213,8 @@ For development or contribution workflows:
 ### Using `uv`
 
 ```bash
-git clone https://github.com/open-edge-platform/anomalib.git
-cd anomalib
+git clone https://github.com/open-edge-platform/defectscopeai.git
+cd defectscopeai
 
 uv venv
 uv sync --extra cpu
@@ -230,8 +230,8 @@ uv sync --extra dev --extra cpu
 ### Using `pip`
 
 ```bash
-git clone https://github.com/open-edge-platform/anomalib.git
-cd anomalib
+git clone https://github.com/open-edge-platform/defectscopeai.git
+cd defectscopeai
 
 pip install -e ".[cpu]"
 pip install -e ".[dev,cpu]"
@@ -246,9 +246,9 @@ DefectScope_AIsupports both **Python API** and **CLI-based** training.
 ### Python API
 
 ```python
-from anomalib.data import MVTecAD
-from anomalib.models import Patchcore
-from anomalib.engine import Engine
+from defectscopeai.data import MVTecAD
+from defectscopeai.models import Patchcore
+from defectscopeai.engine import Engine
 
 datamodule = MVTecAD()
 model = Patchcore()
@@ -261,10 +261,10 @@ engine.fit(datamodule=datamodule, model=model)
 
 ```bash
 # Train with default settings
-DefectScope_AItrain --model Patchcore --data anomalib.data.MVTecAD
+DefectScope_AItrain --model Patchcore --data defectscopeai.data.MVTecAD
 
 # Train with a specific category
-DefectScope_AItrain --model Patchcore --data anomalib.data.MVTecAD --data.category transistor
+DefectScope_AItrain --model Patchcore --data defectscopeai.data.MVTecAD --data.category transistor
 
 # Train with a config file
 DefectScope_AItrain --config path/to/config.yaml
@@ -290,13 +290,13 @@ predictions = engine.predict(
 
 ```bash
 # Basic prediction
-DefectScope_AIpredict --model anomalib.models.Patchcore \
-                 --data anomalib.data.MVTecAD \
+DefectScope_AIpredict --model defectscopeai.models.Patchcore \
+                 --data defectscopeai.data.MVTecAD \
                  --ckpt_path path/to/model.ckpt
 
 # Prediction with returned results
-DefectScope_AIpredict --model anomalib.models.Patchcore \
-                 --data anomalib.data.MVTecAD \
+DefectScope_AIpredict --model defectscopeai.models.Patchcore \
+                 --data defectscopeai.data.MVTecAD \
                  --ckpt_path path/to/model.ckpt \
                  --return_predictions
 ```
@@ -317,7 +317,7 @@ AI-Defect-Detection-for-Manufacturing-Quality-Control/
 ├── application/            # Application code and demos
 ├── docs/                   # Project documentation
 ├── examples/               # Example scripts and notebooks
-├── src/anomalib/           # Core library source code
+├── src/defectscopeai/           # Core library source code
 ├── tests/                  # Unit and integration tests
 ├── tools/                  # Utilities and developer tools
 ├── .dockerignore
@@ -334,7 +334,7 @@ AI-Defect-Detection-for-Manufacturing-Quality-Control/
 
 | Path | Purpose |
 |---|---|
-| `src/anomalib/` | Main source code for the anomaly detection library |
+| `src/defectscopeai/` | Main source code for the anomaly detection library |
 | `examples/` | Example scripts and notebooks |
 | `application/` | Supporting application/demo layer |
 | `tools/` | Inference, utility, and developer tooling |
